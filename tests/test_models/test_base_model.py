@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """
-Unit tests for BaseModel class
+Additional unit tests for BaseModel class
 """
 
 import unittest
 from models.base_model import BaseModel
+import time
 
 
 class TestBaseModel(unittest.TestCase):
@@ -30,25 +31,34 @@ class TestBaseModel(unittest.TestCase):
 
     def test_to_dict_method(self):
         my_model = BaseModel()
-        model_dict = my_model.to_dict()
-        self.assertIsInstance(model_dict, dict)
-        self.assertIn('id', model_dict)
-        self.assertIn('created_at', model_dict)
-        self.assertIn('updated_at', model_dict)
+        my_model.name = "My First Model"
+        my_model.my_number = 89
+        my_model_json = my_model.to_dict()
+        self.assertTrue('__class__' in my_model_json)
+        self.assertEqual(my_model_json['__class__'], 'BaseModel')
+        self.assertTrue('created_at' in my_model_json)
+        self.assertTrue('updated_at' in my_model_json)
+        self.assertTrue('id' in my_model_json)
+        self.assertTrue('name' in my_model_json)
+        self.assertTrue('my_number' in my_model_json)
 
     def test_update_attributes_method(self):
-        model = BaseModel()
-        old_created, old_updated = model.created_at, model.updated_at
+        my_model = BaseModel()
+        old_created_at = my_model.created_at
+        old_updated_at = my_model.updated_at
+        new_attributes = {'name': 'Updated Model', 'my_number': 42}
+    
+        for key, value in new_attributes.items():
+            setattr(my_model, key, value)
+    
+        time.sleep(0.1)
 
-        new_attributes = {
-                'created_at': '2023-01-01T00:00:00',
-                'custom_attribute': 'custom_value'
-        }
-        model.update_attributes(new_attributes)
-
-        self.assertNotEqual(old_created, model.created_at)
-        self.assertNotEqual(old_updated, model.updated_at)
-        self.assertEqual(model.custom_attribute, 'custom_value')
+        my_model.save()
+    
+        self.assertEqual(old_created_at, my_model.created_at)
+        self.assertNotEqual(old_updated_at, my_model.updated_at)
+        self.assertEqual(my_model.name, "Updated Model")
+        self.assertEqual(my_model.my_number, 42)
 
 
 if __name__ == '__main__':
