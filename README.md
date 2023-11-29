@@ -1,6 +1,7 @@
-##AirBnB clone - The console
+#AirBnB clone - The console
 
 #Description of the proyect:
+	
 	The AirBnB Clone project is a command-line interpreter that replicates the basic functionalities of the AirBnB website. It allows users to create, update, and delete instances of various classes, such as BaseModel, User, and more.
 
 #Description of the command interpreter:
