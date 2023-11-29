@@ -28,6 +28,17 @@ class TestAmenity(unittest.TestCase):
         my_amenity.save()
         self.assertNotEqual(old_updated_at, my_amenity.updated_at)
 
+    def test_custom_functionality(self):
+        my_amenity = Amenity()
+        # Test custom functionality, for example, a specific method.
+        my_amenity.set_custom_property("Custom Value")
+        self.assertEqual(my_amenity.get_custom_property(), "Custom Value")
+
+    def test_edge_case(self):
+        # Test an edge case, for example, handling an empty name.
+        my_amenity = Amenity(name="")
+        self.assertEqual(my_amenity.name, "")
+
 
 if __name__ == '__main__':
     unittest.main()

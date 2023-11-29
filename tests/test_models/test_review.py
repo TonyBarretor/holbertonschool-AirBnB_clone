@@ -28,6 +28,17 @@ class TestReview(unittest.TestCase):
         my_review.save()
         self.assertNotEqual(old_updated_at, my_review.updated_at)
 
+    def test_custom_functionality(self):
+        my_review = Review()
+        # Test custom functionality, for example, a specific method.
+        my_review.set_custom_rating(5)
+        self.assertEqual(my_review.get_custom_rating(), 5)
+
+    def test_edge_case(self):
+        # Test an edge case, for example, handling an empty comment.
+        my_review = Review(comment="")
+        self.assertEqual(my_review.comment, "")
+
 
 if __name__ == '__main__':
     unittest.main()
