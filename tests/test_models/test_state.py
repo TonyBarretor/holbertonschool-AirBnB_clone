@@ -28,6 +28,11 @@ class TestState(unittest.TestCase):
         my_state.save()
         self.assertNotEqual(old_updated_at, my_state.updated_at)
 
+    def test_capital_attribute(self):
+        my_state = State()
+        my_state.capital = "Albany"
+        self.assertEqual(my_state.capital, "Albany")
+
 
 if __name__ == '__main__':
     unittest.main()
