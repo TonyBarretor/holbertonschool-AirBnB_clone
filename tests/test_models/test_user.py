@@ -28,6 +28,16 @@ class TestUser(unittest.TestCase):
         my_user.save()
         self.assertNotEqual(old_updated_at, my_user.updated_at)
 
+    def test_age_attribute(self):
+        my_user = User()
+        my_user.age = 25
+        self.assertEqual(my_user.age, 25)
+
+    def test_add_friend_method(self):
+        my_user = User()
+        my_user.add_friend("John")
+        self.assertIn("John", my_user.friends)
+
 
 if __name__ == '__main__':
     unittest.main()

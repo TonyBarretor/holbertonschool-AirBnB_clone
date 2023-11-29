@@ -28,6 +28,16 @@ class TestPlace(unittest.TestCase):
         my_place.save()
         self.assertNotEqual(old_updated_at, my_place.updated_at)
 
+    def test_category_attribute(self):
+        my_place = Place()
+        my_place.category = "Restaurant"
+        self.assertEqual(my_place.category, "Restaurant")
+
+    def test_rating_attribute(self):
+        my_place = Place()
+        my_place.rating = 4.5
+        self.assertEqual(my_place.rating, 4.5)
+
 
 if __name__ == '__main__':
     unittest.main()
