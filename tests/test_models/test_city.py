@@ -28,7 +28,16 @@ class TestCity(unittest.TestCase):
         my_city.save()
         self.assertNotEqual(old_updated_at, my_city.updated_at)
 
+    def test_custom_functionality(self):
+        my_city = City()
+        # Add test code for custom functionality...
+        # For example, test a specific method or behavior.
+
+    def test_edge_case(self):
+        my_city = City()
+        # Add test code for an edge case...
+        # For example, test with specific input values or scenarios.
+
 
 if __name__ == '__main__':
     unittest.main()
-
