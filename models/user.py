@@ -15,6 +15,6 @@ class User(BaseModel):
         pass
 
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     my_user = User()
     print(my_user)

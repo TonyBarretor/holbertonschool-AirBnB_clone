@@ -15,6 +15,6 @@ class Review(BaseModel):
         pass
 
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     my_review = Review()
     print(my_review)
