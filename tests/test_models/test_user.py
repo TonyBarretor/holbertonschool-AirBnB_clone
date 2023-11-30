@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This is Unit tests for User class
+This is our Unit tests for User class.
 """
 
 import unittest
