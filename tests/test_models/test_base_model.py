@@ -47,14 +47,14 @@ class TestBaseModel(unittest.TestCase):
         old_created_at = my_model.created_at
         old_updated_at = my_model.updated_at
         new_attributes = {'name': 'Updated Model', 'my_number': 42}
-    
+
         for key, value in new_attributes.items():
             setattr(my_model, key, value)
-    
+
         time.sleep(0.1)
 
         my_model.save()
-    
+
         self.assertEqual(old_created_at, my_model.created_at)
         self.assertNotEqual(old_updated_at, my_model.updated_at)
         self.assertEqual(my_model.name, "Updated Model")
