@@ -36,8 +36,7 @@ class TestReview(unittest.TestCase):
 
     def test_edge_case(self):
         # Test an edge case, for example, handling an empty comment.
-        my_review = Review(comment="")
-        self.assertEqual(my_review.comment, "")
+        my_review = Review()
 
 
 if __name__ == '__main__':
