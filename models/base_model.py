@@ -3,16 +3,14 @@
 BaseModel module for AirBnB clone project.
 """
 
-
 class BaseModel:
     """
     BaseModel class for representing the base model.
     """
-    def _init_(self):
+    def __init__(self):
         """Initialize BaseModel instance."""
         pass
 
-
-if _name_ == '_main_':
+if __name__ == '__main__':
     my_model = BaseModel()
-    print(my_model)
+    print(my_model)
