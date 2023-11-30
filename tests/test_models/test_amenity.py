@@ -30,14 +30,14 @@ class TestAmenity(unittest.TestCase):
 
     def test_custom_functionality(self):
         my_amenity = Amenity()
-        # Test custom functionality, for example, a specific method.
         my_amenity.set_custom_property("Custom Value")
         self.assertEqual(my_amenity.get_custom_property(), "Custom Value")
 
     def test_edge_case(self):
         # Test an edge case, for example, handling an empty name.
-        my_amenity = Amenity(name="")
-        self.assertEqual(my_amenity.name, "")
+        my_amenity = Amenity()
+        self.assertEqual(my_amenity.get_custom_property(), None)  
+        #Custom property default value
 
 
 if __name__ == '__main__':
