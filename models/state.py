@@ -12,7 +12,8 @@ class State(BaseModel):
     """
     def __init__(self):
         """Initialize State instance."""
-        pass
+        super().__init__()
+        self.capital = ""
 
 
 if __name__ == '__main__':

@@ -20,7 +20,8 @@ class TestUser(unittest.TestCase):
 
     def test_str_method(self):
         my_user = User()
-        self.assertIsInstance(str(my_user), str)
+        user_str = str(my_user)
+        self.assertIsInstance(user_str, str)
         self.assertIn('User', user_str)
 
     def test_save_method(self):
@@ -42,3 +43,4 @@ class TestUser(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+

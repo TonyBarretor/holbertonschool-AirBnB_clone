@@ -33,6 +33,12 @@ class TestState(unittest.TestCase):
         my_state.capital = "Albany"
         self.assertEqual(my_state.capital, "Albany")
 
+    def test_population_attribute(self):
+        # Add a new test for the population attribute.
+        my_state = State()
+        my_state.population = 1000000
+        self.assertEqual(my_state.population, 1000000)
+
 
 if __name__ == '__main__':
     unittest.main()

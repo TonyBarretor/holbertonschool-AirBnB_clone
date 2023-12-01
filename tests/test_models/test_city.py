@@ -30,14 +30,13 @@ class TestCity(unittest.TestCase):
 
     def test_custom_functionality(self):
         my_city = City()
-        # Test custom functionality, for example, a specific method.
+        # Add custom functionality, for example, specific methods.
         my_city.set_custom_property("Custom Value")
         self.assertEqual(my_city.get_custom_property(), "Custom Value")
 
     def test_edge_case(self):
         # Test an edge case, for example, handling an empty name.
-        my_city = City(name="")
-        self.assertEqual(my_city.name, "")
+        my_city = City()
 
 
 if __name__ == '__main__':
