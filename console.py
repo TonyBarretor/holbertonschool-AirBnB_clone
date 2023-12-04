@@ -31,6 +31,58 @@ class HBNBCommand(cmd.Cmd):
                 new_instance = eval(line)()
                 new_instance.save()
                 print(new_instance.id)
+
+     def do_count(self, line):
+        """Retrieves the number of instances of a class
+        """
+        args = line.split()
+        if not args or args[0] not in ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]:
+            print("** class doesn't exist **")
+        else:
+            class_name = args[0]
+            count = sum(1 for obj in storage.all().values() if isinstance(obj, eval(class_name)))
+            print(count)
+
+
+    def do_show(self, line):
+        """Prints the string representation of an instance
+        based on the class name and id
+        """
+        args = line.split()
+        if not args or args[0] not in ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]:
+            print("** class doesn't exist **")
+        elif len(args) < 2:
+            print("** instance id missing **")
+        else:
+            class_name = args[0]
+            instance_id = args[1]
+            key = "{}.{}".format(class_name, instance_id)
+            obj = storage.all().get(key)
+            if obj is None:
+                print("** no instance found **")
+            else:
+                print(obj)
+
+
+    def do_destroy(self, line):
+        """Deletes an instance based on the class name and id
+        """
+        args = line.split()
+        if not args or args[0] not in ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]:
+            print("** class doesn't exist **")
+        elif len(args) < 2:
+            print("** instance id missing **")
+        else:
+            class_name = args[0]
+            instance_id = args[1]
+            key = "{}.{}".format(class_name, instance_id)
+            obj = storage.all().get(key)
+            if obj is None:
+                print("** no instance found **")
+            else:
+                del storage.all()[key]
+                storage.save()
+
     def do_show(self, line):
         """Prints the string representation of an instance
         based on the class name and id
