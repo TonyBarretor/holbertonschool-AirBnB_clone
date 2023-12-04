@@ -1,108 +1,105 @@
 #!/usr/bin/python3
+
 import cmd
-from models import storage
 from models.base_model import BaseModel
 from models.user import User
+from models.engine.file_storage import FileStorage
 
 
 class HBNBCommand(cmd.Cmd):
+    """Command interpreter for Holberton Airbnb project."""
+
     prompt = '(hbnb) '
 
     def do_create(self, arg):
-        """Create a new instance of BaseModel"""
+        """Creates a new instance of BaseModel and saves it to JSON file."""
         if not arg:
             print("** class name missing **")
             return
+
         try:
-            new_instance = eval(arg)()
-            new_instance.save()
-            print(new_instance.id)
+            class_type = eval(arg)()
+            class_type.save()
+            print(class_type.id)
         except NameError:
             print("** class doesn't exist **")
 
     def do_show(self, arg):
-        """Show the string representation of an instance"""
+        """Prints the string representation of an instance."""
         args = arg.split()
-        if len(args) == 0:
+        if not arg:
             print("** class name missing **")
             return
-        if len(args) == 1:
+        if len(args) < 2:
             print("** instance id missing **")
             return
-        try:
-            key = "{}.{}".format(args[0], args[1])
-            print(storage.all()[key])
-        except KeyError:
+
+        key = "{}.{}".format(args[0], args[1])
+        objects = FileStorage().all()
+        obj = objects.get(key, None)
+
+        if obj:
+            print(obj)
+        else:
             print("** no instance found **")
 
     def do_destroy(self, arg):
-        """Delete an instance based on the class name and id"""
+        """Deletes an instance based on the class name and id."""
         args = arg.split()
-        if len(args) == 0:
+        if not arg:
             print("** class name missing **")
             return
-        if len(args) == 1:
+        if len(args) < 2:
             print("** instance id missing **")
             return
-        try:
-            key = "{}.{}".format(args[0], args[1])
-            del storage.all()[key]
-            storage.save()
-        except KeyError:
+
+        key = "{}.{}".format(args[0], args[1])
+        objects = FileStorage().all()
+        obj = objects.get(key, None)
+
+        if obj:
+            del objects[key]
+            FileStorage().save()
+        else:
             print("** no instance found **")
 
     def do_all(self, arg):
-        """Print all string representations of all instances"""
-        args = arg.split()
-        objs = storage.all()
-        if len(args) == 0:
-            print([str(objs[obj]) for obj in objs])
+        """Prints all string representations of all instances."""
+        objects = FileStorage().all()
+        if not arg:
+            print([str(obj) for obj in objects.values()])
         else:
             try:
-                print([str(objs[obj]) for obj in objs if args[0] in obj])
-            except KeyError:
+                class_type = eval(arg)
+                print([str(obj) for key, obj in objects.items() if type(obj) == class_type])
+            except NameError:
                 print("** class doesn't exist **")
 
     def do_update(self, arg):
-        """Update an instance based on the class name and id"""
+        """Updates an instance based on the class name and id."""
         args = arg.split()
-        if len(args) == 0:
+        if not arg:
             print("** class name missing **")
             return
-        if len(args) == 1:
+        if len(args) < 2:
             print("** instance id missing **")
             return
-        try:
-            key = "{}.{}".format(args[0], args[1])
-            if key not in storage.all():
-                print("** no instance found **")
-                return
-            if len(args) == 2:
-                print("** attribute name missing **")
-                return
-            if len(args) == 3:
-                print("** value missing **")
-                return
-            obj = storage.all()[key]
-            setattr(obj, args[2], eval(args[3]))
-            storage.save()
-        except KeyError:
+        if len(args) < 3:
+            print("** attribute name missing **")
+            return
+        if len(args) < 4:
+            print("** value missing **")
+            return
+
+        key = "{}.{}".format(args[0], args[1])
+        objects = FileStorage().all()
+        obj = objects.get(key, None)
+
+        if obj:
+            setattr(obj, args[2], args[3])
+            obj.save()
+        else:
             print("** no instance found **")
-
-    def do_EOF(self, line):
-        """Quit the console"""
-        return True
-
-    def do_quit(self, line):
-        """Quit the console"""
-        return True
-    def emptyline(self):
-        """Do nothing on an empty line"""
-        pass
-
-    def emptyline(self):
-        """Do nothing on empty input line"""
-        pass
 
 
 if __name__ == '__main__':

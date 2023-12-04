@@ -1,39 +1,36 @@
 #!/usr/bin/python3
 
 import json
+import os.path
 from models.base_model import BaseModel
-from models.user import User
+from models.user import User  # Import the User class
 
 
 class FileStorage:
-    def __init__(self):
-        self.__file_path = "file.json"
-        self.__objects = {}
-
-    def reload(self):
-        """Deserialize the JSON file to objects."""
-        try:
-            with open(self.__file_path, 'r', encoding='utf-8') as file:
-                data = json.load(file)
-                for key, value in data.items():
-                    class_name = value['__class__']
-                    del value['__class__']
-
-                    # Dynamically get the class by name
-                    class_ = globals()[class_name]
-                    obj = class_(**value)
-                    self.__objects[key] = obj
-        except FileNotFoundError:
-            pass
-
-    def save(self):
-        """Serialize the objects to a JSON file."""
-        with open(self.__file_path, 'w', encoding='utf-8') as file:
-            data = {}
-            for key, obj in self.__objects.items():
-                data[key] = obj.to_dict()
-            json.dump(data, file)
+    __file_path = "file.json"
+    __objects = {}
 
     def all(self):
-        """Return the dictionary __objects."""
-        return self.__objects
+        return FileStorage.__objects
+
+    def new(self, obj):
+        key = "{}.{}".format(obj.__class__.__name__, obj.id)
+        FileStorage.__objects[key] = obj
+
+    def save(self):
+        serialized_objects = {}
+        for key, value in FileStorage.__objects.items():
+            serialized_objects[key] = value.to_dict()
+
+        with open(FileStorage.__file_path, 'w', encoding='utf-8') as file:
+            json.dump(serialized_objects, file)
+
+    def reload(self):
+        if os.path.exists(FileStorage.__file_path):
+            with open(FileStorage.__file_path, 'r', encoding='utf-8') as file:
+                data = json.load(file)
+                for key, value in data.items():
+                    class_name, obj_id = key.split('.')
+                    class_type = eval(class_name)
+                    obj_instance = class_type(**value)
+                    FileStorage.__objects[key] = obj_instance
