@@ -7,13 +7,8 @@ from models.base_model import BaseModel
 
 
 class State(BaseModel):
-    """
-    State class for representing a state.
-    """
-    def __init__(self):
-        """Initialize State instance."""
-        super().__init__()
-        self.capital = ""
+    """State class"""
+    name = ""
 
 
 if __name__ == '__main__':
