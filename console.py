@@ -9,13 +9,10 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-
-
 class HBNBCommand(cmd.Cmd):
     """Command interpreter for HBNB Airbnb project
     """
     prompt = '(hbnb) '
-
     def do_create(self, line):
         """Create a new instance of BaseModel,
         saves it (to the JSON file) and prints the id
@@ -30,7 +27,6 @@ class HBNBCommand(cmd.Cmd):
                 new_instance = eval(line)()
                 new_instance.save()
                 print(new_instance.id)
-
     def do_show(self, line):
         """Prints the string representation of an instance
         based on the class name and id
@@ -49,7 +45,6 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
             else:
                 print(all_objects[key])
-
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id
         """
@@ -68,7 +63,6 @@ class HBNBCommand(cmd.Cmd):
             else:
                 del all_objects[key]
                 storage.save()
-
     def do_all(self, line):
         """Prints all string representation of all instances
         based or not on the class name
@@ -81,7 +75,6 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else:
             print([str(obj) for key, obj in all_objects.items() if args[0] in key])
-
     def do_update(self, line):
         """Updates an instance based on the class name and id
         by adding or updating attribute (save the change
@@ -107,17 +100,14 @@ class HBNBCommand(cmd.Cmd):
                 obj = all_objects[key]
                 setattr(obj, args[2], eval(args[3]))
                 storage.save()
-
     def do_EOF(self, line):
         """Exits the console
         """
         return True
-
     def do_quit(self, line):
         """Exits the console
         """
         return True
-
     def emptyline(self):
         """Empty line + ENTER should not execute anything
         """
