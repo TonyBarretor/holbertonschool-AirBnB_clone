@@ -5,9 +5,8 @@ header {
     border-bottom: 1px solid #CCCCCC;
 }
 
-/* Assuming you have a logo image named 'logo.png' in the images folder */
 header::before {
-    content: url('images/logo.png');
+    content: url('/web_static/images/logo.png');
     margin-left: 20px;
     display: inline-block;
     vertical-align: middle;
